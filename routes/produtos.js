@@ -1,5 +1,31 @@
 const express = require('express')
 const router = express.Router()
+const options = require('../knexfile')[process.env.ENVIRONMENT || 'development']
+const knex = require('knex')(options)
+
+// INSERE UM PRODUTO
+router.post('/', async (req, res, next) => {
+  
+  try {
+    
+    const prod = await knex('produtos')
+      .insert({
+        nome: req.body.nome,
+        preco: req.body.preco
+      })
+      .returning('*')
+    
+    res.status(201).send({
+      mensagem: 'Produto inserirdo com sucesso',
+      idProduto: prod[0].id_produto
+    })
+  } catch (error) {
+    res.status(500).send({
+      error: error,
+      response: null
+    })
+  }
+})
 
 // RETORNA TODOS OS PRODUTOS
 router.get('/', (req, res, next) => {
@@ -8,17 +34,6 @@ router.get('/', (req, res, next) => {
   })
 })
 
-// INSERE UM PRODUTO
-router.post('/', (req, res, next) => {
-  const produto = {
-    nome: req.body.nome,
-    preco: req.body.preco
-  }
-  res.status(201).send({
-    mensagem: 'Insere um produto',
-    produtoCriado: produto
-  })
-})
 
 // RETORNA OS DADOS DE UM PRODUTO
 router.get('/:id_produto', (req, res, next) => {
