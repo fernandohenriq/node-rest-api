@@ -7,62 +7,117 @@ const knex = require('knex')(options)
 router.post('/', async (req, res, next) => {
   
   try {
-    
-    const prod = await knex('produtos')
+    const idProdudo = await knex('produtos')
       .insert({
         nome: req.body.nome,
         preco: req.body.preco
       })
-      .returning('*')
-    
-    res.status(201).send({
+      .returning('id_produto')
+      
+    return res.status(201).send({
       mensagem: 'Produto inserirdo com sucesso',
-      idProduto: prod[0].id_produto
+      idProduto: idProdudo
     })
-  } catch (error) {
-    res.status(500).send({
-      error: error,
-      response: null
+
+  } catch (err) {
+    return res.status(500).send({
+      error: err
     })
   }
 })
 
 // RETORNA TODOS OS PRODUTOS
-router.get('/', (req, res, next) => {
-  res.status(200).send({
-    mensagem: 'Retorna todo os produtos'
-  })
+router.get('/', async (req, res, next) => {
+  try {
+    const produtos = await knex('produtos')
+    .select('*')
+
+    if (produtos.length === 0) {
+      return res.status(404).send({
+        mensagem: "Não há registros de produto",
+        request: {
+          total: produtos.length,
+          produtos: produtos
+        }
+      })
+    }
+    
+    return res.status(202).send({
+      message: "Lista de produtos retornado com sucesso",
+      request: {
+        total: produtos.length,
+        produtos: produtos
+      }
+    })
+
+  } catch (err) {
+    return res.status(500).send({
+      error: err
+    })
+  }
 })
 
 
 // RETORNA OS DADOS DE UM PRODUTO
-router.get('/:id_produto', (req, res, next) => {
-  const id = req.params.id_produto
+router.get('/:id_produto', async (req, res, next) => {
+  
+  try {
+    const produto = await knex('produtos')
+    .where('id_produto','=',req.params.id_produto)
+    .select('*')
 
-  if (id === 'especial'){
-    res.status(200).send({
-      mensagem: 'Você descobriu o id especial',
-      id: id,
+    if (produto.length === 0) {
+      return res.status(404).send({
+        total: produto.length,
+        produto: produto,
+        query: req.params
+      })
+    }
+    return res.status(202).send({
+      total: produto.length,
+      produto: produto,
+      query: req.params
     })
-  } else {
-    res.status(200).send({
-      mensagem: 'Você passou um ID'
+  } catch (err) {
+    return res.status(500).send({
+      error: err
     })
   }
 })
 
 // ALTERA UM PRODUTO
-router.patch('/', (req, res, next) => {
-  res.status(201).send({
-    mensagem: 'Produto alterado'
-  })
+router.patch('/', async (req, res, next) => {
+  try {
+    await knex('produtos')
+    .where('id_produto','=',req.body.id_produto)
+    .update({
+      nome: req.body.nome,
+      preco: req.body.preco
+    })
+    return res.status(202).send({
+      mensagem: 'Produto alterado com sucesso.'
+    })
+  } catch (err) {
+    return res.status(500).send({
+      error: err
+    })
+  }
 })
 
 // EXCLUI UM PRODUTO
-router.delete('/', (req, res, next) => {
-  res.status(201).send({
-    mensagem: 'Produto excluído'
-  })
+router.delete('/', async (req, res, next) => {
+  try {
+    await knex('produtos')
+    .where('id_produto','=',req.body.id_produto)
+    .delete()
+    return res.status(202).send({
+      mensagem: 'Produto excluído com sucesso.'
+    })
+  } catch (err) {
+    return res.status(500).send({
+      error: err
+    })
+  }
 })
 
 module.exports = router
