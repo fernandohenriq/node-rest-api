@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router()
 const options = require('../knexfile')[process.env.ENVIRONMENT || 'development']
 const knex = require('knex')(options)
+const login = require('../middleware/login')
 
 // INSERE UM PRODUTO
-router.post('/', async (req, res, next) => {
-  
+router.post('/', login.obrigatorio, async (req, res, next) => {
+  console.log(req.usuario);
   try {
     const idProdudo = await knex('produtos')
       .insert({
@@ -18,7 +19,6 @@ router.post('/', async (req, res, next) => {
       mensagem: 'Produto inserirdo com sucesso',
       idProduto: idProdudo
     })
-
   } catch (err) {
     return res.status(500).send({
       error: err
@@ -35,19 +35,15 @@ router.get('/', async (req, res, next) => {
     if (produtos.length === 0) {
       return res.status(404).send({
         mensagem: "Não há registros de produto",
-        request: {
-          total: produtos.length,
-          produtos: produtos
-        }
+        total: produtos.length,
+        produtos: produtos
       })
     }
     
     return res.status(202).send({
       message: "Lista de produtos retornado com sucesso",
-      request: {
-        total: produtos.length,
-        produtos: produtos
-      }
+      total: produtos.length,
+      produtos: produtos
     })
 
   } catch (err) {
@@ -57,10 +53,8 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-
 // RETORNA OS DADOS DE UM PRODUTO
 router.get('/:id_produto', async (req, res, next) => {
-  
   try {
     const produto = await knex('produtos')
     .where('id_produto','=',req.params.id_produto)
@@ -86,7 +80,7 @@ router.get('/:id_produto', async (req, res, next) => {
 })
 
 // ALTERA UM PRODUTO
-router.patch('/', async (req, res, next) => {
+router.patch('/', login.obrigatorio, async (req, res, next) => {
   try {
     await knex('produtos')
     .where('id_produto','=',req.body.id_produto)
@@ -105,7 +99,7 @@ router.patch('/', async (req, res, next) => {
 })
 
 // EXCLUI UM PRODUTO
-router.delete('/', async (req, res, next) => {
+router.delete('/', login.obrigatorio, async (req, res, next) => {
   try {
     await knex('produtos')
     .where('id_produto','=',req.body.id_produto)
