@@ -1,4 +1,4 @@
-const options = require('../knexfile')[process.env.ENVIRONMENT || 'development'];
+const options = require('../../knexfile')[process.env.ENVIRONMENT || 'development'];
 const knex = require('knex')(options);
 
 // INSERE UM PRODUTO

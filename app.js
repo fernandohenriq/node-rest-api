@@ -3,9 +3,9 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const rotaProdutos = require('./routes/produtos');
-const rotaPedidos = require('./routes/pedidos');
-const rotaUsuarios = require('./routes/usuarios');
+const rotaProdutos = require('./src/routes/produtos');
+const rotaPedidos = require('./src/routes/pedidos');
+const rotaUsuarios = require('./src/routes/usuarios');
 
 // DEBUG HTTP VERBO RESPONSE
 app.use(morgan('dev'));
