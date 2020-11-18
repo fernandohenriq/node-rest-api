@@ -1,23 +1,23 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 exports.obrigatorio = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
-    const decode = jwt.verify(token, process.env.JWT_KEY)
+    const token = req.headers.authorization.split(' ')[1];
+    const decode = jwt.verify(token, process.env.JWT_KEY);
     req.usuario = decode;
-    next()
+    next();
   } catch (err) {
-    return res.status(401).send({ mensagem: "Falha na autenticação" })
+    return res.status(401).send({ mensagem: "Falha na autenticação" });
   }
 }
 
 exports.opcional = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
-    const decode = jwt.verify(token, process.env.JWT_KEY)
+    const token = req.headers.authorization.split(' ')[1];
+    const decode = jwt.verify(token, process.env.JWT_KEY);
     req.usuario = decode;
-    next()
+    next();
   } catch (err) {
-    next()
+    next();
   }
 }
