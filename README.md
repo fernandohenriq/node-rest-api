@@ -6,7 +6,7 @@ First of all, install dependences
 ```
 npm install
 ```
-Start the application
+Starting the application
 ```
 npm start
 ```
