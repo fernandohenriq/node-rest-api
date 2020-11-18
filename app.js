@@ -7,6 +7,7 @@ const rotaProdutos = require('./routes/produtos');
 const rotaPedidos = require('./routes/pedidos');
 const rotaUsuarios = require('./routes/usuarios');
 
+// DEBUG HTTP VERBO RESPONSE
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false})); // APENAS DADOS SIMPLES
 app.use(bodyParser.json()); // JSON DE ENTRADA NO BODY
