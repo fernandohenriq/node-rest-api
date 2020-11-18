@@ -12,7 +12,7 @@ exports.postPedidos = async (req, res, next) => {
     
     return res.status(201).send({
       mensagem: 'Pedido inserirdo com sucesso',
-      idProduto: idPedido
+      idpedido: idPedido
     });
 
   } catch (err) {
@@ -55,19 +55,19 @@ exports.getPedidos = async (req, res, next) => {
 exports.getUmPedidos = async (req, res, next) => {
   try {
     const pedido = await knex('pedidos')
-    .where('id_pedido','=',req.params.id_produto)
+    .where('id_pedido','=',req.params.id_pedido)
     .select('*');
-
-    if (produto.length === 0) {
+    
+    if (pedido.length === 0) {
       return res.status(404).send({
         total: pedido.length,
-        produto: pedido
+        pedido: pedido
       });
     }
 
     return res.status(202).send({
       total: pedido.length,
-      produto: pedido
+      pedido: pedido
     });
   } catch (err) {
     return res.status(500).send({
