@@ -23,7 +23,7 @@ BD_USUARIO=
 BD_SENHA=
 BD_DATABASE=
 ```
-* <strong>JWT_KEY</strong>: Key used in to encrypt the *header* and the *payload*
+* <strong>JWT_KEY</strong>: Key used to encrypt the *header* and the *payload*
 * <strong>BD_*</strong>: Database connection configuration
 
 ## Endpoints
@@ -40,7 +40,7 @@ BD_DATABASE=
 * <strong>DELETE /pedidos:</strong> will delete the pedido defined in the request body
 
 ## Future iprovements
-* Change everything in English
+* Change everything in english
 * Create database migration
 * Create database seeds
 * More
