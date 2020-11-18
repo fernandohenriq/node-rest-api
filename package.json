@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "node-rest-api",
   "version": "1.0.0",
   "description": "Tutorial: https://www.youtube.com/watch?v=hAAj27hgPFg&list=PLWgD0gfm500EMEDPyb3Orb28i7HK5_DkR&index=2&ab_channel=Maransatto",
   "main": "index.js",
