@@ -18,6 +18,5 @@ module.exports = {
       directory: __dirname + '/knex/seeds'
     }
   }
-
 }
 
