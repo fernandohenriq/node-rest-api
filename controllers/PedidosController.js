@@ -81,13 +81,15 @@ exports.deletePedido = async (req, res, next) => {
   try {
     await knex('pedidos')
     .where('id_pedido','=',req.body.id_pedido)
-    .delete()
+    .delete();
+
     return res.status(202).send({
       mensagem: 'Pedido excluído com sucesso.'
-    })
+    });
+
   } catch (err) {
     return res.status(500).send({
       error: err
-    })
+    });
   }
 }

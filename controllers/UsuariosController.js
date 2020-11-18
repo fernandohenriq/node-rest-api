@@ -24,18 +24,15 @@ exports.postUsuario = async (req, res, next) => {
         emaill: req.body.email,
         senha: hash
       }).returning('id_usuario')
-      .then((r) => {
 
-        return res.status(201).send({
-          mensagem: "Usuário criado com sucesso",
-          usuarioCriado: {
-            id_usuario: r[0],
-            email: req.body.email
-          }
-        });
-      }).catch(e => {
-        return res.status(500).send({ error: e });
-      })
+      return res.status(201).send({
+        mensagem: "Usuário criado com sucesso",
+        usuarioCriado: {
+          id_usuario: r[0],
+          email: req.body.email
+        }
+      });
+
     })
   } catch (err) {
     return res.status(500).send({ error: err });
@@ -47,27 +44,25 @@ exports.postLogin = async (req, res, next) => {
   try {
     const user = await knex('usuarios')
     .where('email','=',req.body.email)
-    .select('*')
+    .select('*');
     
-    if (user < 1) {
-      return res.status(401).send({ mensagem: "Falha na autenticação" })
-    }
+    if (user < 1) { return res.status(401).send({ mensagem: "Falha na autenticação" }); }
+
     bcrypt.compare(req.body.senha, user[0].senha, (err, result) => {
-      if (err || !result) return res.status(401).send({ mensagem: "Falha na autenticação" })
+      if (err || !result) return res.status(401).send({ mensagem: "Falha na autenticação" });
       const token = jwt.sign({
         id_usuario: user[0].id_usuario,
         email: user[0].email
-      }, process.env.JWT_KEY,
-      {
+      }, process.env.JWT_KEY, {
         expiresIn: "12h"
-      })
+      });
 
       return res.status(200).send({
         mensagem: "Autenticado com sucesso",
         token: token
-      })
+      });
     })
   } catch (err) {
-    return res.status(500).send({ error: err })
+    return res.status(500).send({ error: err });
   }
 }

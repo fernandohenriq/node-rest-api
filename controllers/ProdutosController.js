@@ -85,9 +85,11 @@ exports.patchProduto = async (req, res, next) => {
       nome: req.body.nome,
       preco: req.body.preco
     });
+
     return res.status(202).send({
       mensagem: 'Produto alterado com sucesso.'
     });
+
   } catch (err) {
     return res.status(500).send({
       error: err
@@ -100,10 +102,12 @@ exports.deleteProduto = async (req, res, next) => {
   try {
     await knex('produtos')
     .where('id_produto','=',req.body.id_produto)
-    .delete()
+    .delete();
+
     return res.status(202).send({
       mensagem: 'Produto excluído com sucesso.'
-    })
+    });
+    
   } catch (err) {
     return res.status(500).send({
       error: err
