@@ -36,8 +36,8 @@ BD_DATABASE=
 * <strong>DELETE /produtos:</strong> will delete the product defined in the request body
 * <strong>POST /pedidos:</strong> Will create a new order
 * <strong>GET /pedidos:</strong> Will return all orders
-* <strong>GET /pedidos/[id_pedido]:</strong> Will return the pedido with the given id
-* <strong>DELETE /pedidos:</strong> will delete the pedido defined in the request body
+* <strong>GET /pedidos/[id_pedido]:</strong> Will return the order with the given id
+* <strong>DELETE /pedidos:</strong> will delete the order defined in the request body
 
 ## Future iprovements
 * Change everything in english
