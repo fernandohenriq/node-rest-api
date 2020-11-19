@@ -38,6 +38,7 @@ BD_DATABASE=
 * <strong>GET /pedidos:</strong> Will return all orders
 * <strong>GET /pedidos/[id_pedido]:</strong> Will return the order with the given id
 * <strong>DELETE /pedidos:</strong> will delete the order defined in the request body **
+<br>
 ** Token required to authenticate
 
 ## Future iprovements
