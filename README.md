@@ -39,8 +39,9 @@ BD_DATABASE=
 * <strong>GET /pedidos/[id_pedido]:</strong> Will return the order with the given id
 * <strong>DELETE /pedidos:</strong> will delete the order defined in the request body
 
-## Future iprovements
-* Change everything in english
+## Future improvements
+* Change everything to english
+* Change PATCH to PUT
 * Create database migration
 * Create database seeds
 * More
